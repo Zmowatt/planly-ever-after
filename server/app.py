@@ -1,7 +1,7 @@
 from flask import Flask, request, session
 from flask_cors import CORS
 from config import db, migrate, bcrypt
-# from models import User, Wedding, BudgetItem, Vendor
+from models import User, Wedding, BudgetItem, Vendor
 
 app = Flask(__name__)
 

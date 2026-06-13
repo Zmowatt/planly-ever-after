@@ -83,7 +83,7 @@ function Dashboard({ user }) {
       <h1>Dashboard</h1>
       <p>Welcome back, {user?.username}.</p>
 
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       {wedding ? (
         <section>

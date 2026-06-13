@@ -109,8 +109,8 @@ function WeddingProfile() {
     <main>
       <h1>Wedding Profile</h1>
 
-      {message ? <p>{message}</p> : null}
-      {error ? <p>{error}</p> : null}
+      {message ? <p className="success">{message}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       <form onSubmit={handleSubmit}>
         <label>

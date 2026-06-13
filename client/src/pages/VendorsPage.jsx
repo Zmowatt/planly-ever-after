@@ -155,7 +155,7 @@ function VendorsPage() {
     <main>
       <h1>Vendor Tracker</h1>
 
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       <section>
         <h2>Vendor Summary</h2>

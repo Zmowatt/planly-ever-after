@@ -51,7 +51,7 @@ function handleSubmit(event) {
     <main>
       <h1>Login</h1>
 
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       <form onSubmit={handleSubmit}>
         <label>

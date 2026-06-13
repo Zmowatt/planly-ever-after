@@ -49,7 +49,7 @@ function Signup({ setUser }) {
     <main>
       <h1>Sign Up</h1>
 
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       <form onSubmit={handleSubmit}>
         <label>

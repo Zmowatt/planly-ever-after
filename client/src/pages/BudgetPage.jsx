@@ -158,7 +158,7 @@ function BudgetPage() {
     <main>
       <h1>Budget Tracker</h1>
 
-      {error ? <p>{error}</p> : null}
+      {error ? <p className="error">{error}</p> : null}
 
       <section>
         <h2>Budget Summary</h2>

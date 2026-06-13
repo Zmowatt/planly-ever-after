@@ -25,7 +25,7 @@ function Dashboard({ user }) {
       .then((weddingData) => setWedding(weddingData))
       .catch((error) => setError(error.message));
 
-    fetch("/api/budget_items", {
+    fetch("/api/budget-items", {
       credentials: "include",
     })
       .then((res) => {

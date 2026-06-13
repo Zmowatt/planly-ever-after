@@ -2,64 +2,101 @@
   box-sizing: border-box;
 }
 
+:root {
+  --ivory: #fbf7f0;
+  --cream: #fffdf8;
+  --champagne: #d8b88f;
+  --rose: #b8878f;
+  --plum: #4b2e45;
+  --sage: #8c9b7a;
+  --charcoal: #2d2a2a;
+  --muted: #746b66;
+  --border: #eadfce;
+  --shadow: 0 12px 30px rgba(75, 46, 69, 0.12);
+}
+
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f8f5f0;
-  color: #2f2f2f;
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(circle at top left, rgba(216, 184, 143, 0.25), transparent 30%),
+    linear-gradient(135deg, var(--ivory), #f5eee5);
+  color: var(--charcoal);
 }
 
 a {
-  color: #7b4f75;
+  color: var(--plum);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--rose);
 }
 
 nav {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 2rem;
-  background: #ffffff;
-  border-bottom: 1px solid #e7ddd2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 1.1rem 2rem;
+  background: rgba(255, 253, 248, 0.92);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 18px rgba(75, 46, 69, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
 }
 
 nav a:first-child {
   margin-right: auto;
-  font-size: 1.25rem;
-  color: #4b2e45;
+  font-size: 1.45rem;
+  color: var(--plum);
+  letter-spacing: 0.04em;
+}
+
+nav button {
+  margin-left: 0.25rem;
 }
 
 main {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 0 1rem 3rem;
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 0 1.25rem 4rem;
 }
 
 h1 {
-  color: #4b2e45;
-  margin-bottom: 0.5rem;
+  color: var(--plum);
+  font-size: 2.6rem;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.02em;
 }
 
 h2 {
-  color: #6f4d65;
+  color: var(--plum);
   margin-top: 0;
+  font-size: 1.55rem;
+}
+
+h3 {
+  color: var(--plum);
+  margin-bottom: 0.35rem;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--muted);
 }
 
 section,
 article,
 form {
-  background: #ffffff;
-  border: 1px solid #e7ddd2;
-  border-radius: 14px;
-  padding: 1.25rem;
-  margin: 1rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 253, 248, 0.94);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 1.5rem;
+  margin: 1.25rem 0;
+  box-shadow: var(--shadow);
 }
 
 form {
@@ -69,39 +106,45 @@ form {
 
 label {
   display: grid;
-  gap: 0.35rem;
-  font-weight: 600;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--plum);
 }
 
 input,
 select {
   width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #d5c8bd;
-  border-radius: 8px;
+  padding: 0.85rem;
+  border: 1px solid #d8cbb9;
+  border-radius: 12px;
+  background: #fffaf3;
+  color: var(--charcoal);
   font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 input:focus,
 select:focus {
-  outline: 2px solid #c7a6bd;
-  border-color: #7b4f75;
+  outline: 3px solid rgba(216, 184, 143, 0.35);
+  border-color: var(--champagne);
 }
 
 button {
   width: fit-content;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1.15rem;
   border: none;
-  border-radius: 8px;
-  background: #7b4f75;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--plum), #72536c);
   color: white;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   cursor: pointer;
+  box-shadow: 0 8px 18px rgba(75, 46, 69, 0.18);
 }
 
 button:hover {
-  background: #5e3b59;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #3a2335, var(--plum));
 }
 
 article button,
@@ -110,18 +153,41 @@ article select {
   margin-right: 0.5rem;
 }
 
-p {
-  line-height: 1.5;
-}
-
 .error {
   color: #9d1c1c;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .success {
-  color: #1f7a3f;
-  font-weight: 700;
+  color: #2f7a4f;
+  font-weight: 800;
+}
+
+main > section:first-of-type {
+  border-top: 5px solid var(--champagne);
+}
+
+main > h1 + p {
+  font-size: 1.1rem;
+}
+
+form button {
+  margin-top: 0.5rem;
+}
+
+article {
+  border-left: 5px solid var(--champagne);
+}
+
+@media (min-width: 800px) {
+  form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  form button,
+  form label:last-of-type {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 700px) {
@@ -134,7 +200,11 @@ p {
     width: 100%;
   }
 
+  h1 {
+    font-size: 2.1rem;
+  }
+
   main {
-    margin-top: 1rem;
+    margin-top: 1.25rem;
   }
 }

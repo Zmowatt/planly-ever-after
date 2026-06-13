@@ -253,7 +253,7 @@ def delete_budget_item(id):
 
     return {}, 204
 
-    @app.get("/api/vendors")
+@app.get("/api/vendors")
 def get_vendors():
     user = get_current_user()
 

@@ -159,6 +159,100 @@ def update_wedding(id):
 
     return wedding.to_dict(), 200
 
+@app.get("/api/budget-items")
+def get_budget_items():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if not user.wedding:
+        return [], 200
+
+    return [item.to_dict() for item in user.wedding.budget_items], 200
+
+
+@app.post("/api/budget-items")
+def create_budget_item():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if not user.wedding:
+        return {"error": "Create a wedding profile first."}, 400
+
+    data = request.get_json()
+
+    item = BudgetItem(
+        category=data.get("category"),
+        description=data.get("description"),
+        estimated_cost=data.get("estimated_cost", 0),
+        actual_cost=data.get("actual_cost", 0),
+        paid=data.get("paid", False),
+        notes=data.get("notes"),
+        wedding_id=user.wedding.id
+    )
+
+    db.session.add(item)
+    db.session.commit()
+
+    return item.to_dict(), 201
+
+
+@app.patch("/api/budget-items/<int:id>")
+def update_budget_item(id):
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    item = BudgetItem.query.get(id)
+
+    if not item:
+        return {"error": "Budget item not found."}, 404
+
+    if not user.wedding or item.wedding_id != user.wedding.id:
+        return {"error": "Forbidden."}, 403
+
+    data = request.get_json()
+
+    for field in [
+        "category",
+        "description",
+        "estimated_cost",
+        "actual_cost",
+        "paid",
+        "notes"
+    ]:
+        if field in data:
+            setattr(item, field, data[field])
+
+    db.session.commit()
+
+    return item.to_dict(), 200
+
+
+@app.delete("/api/budget-items/<int:id>")
+def delete_budget_item(id):
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    item = BudgetItem.query.get(id)
+
+    if not item:
+        return {"error": "Budget item not found."}, 404
+
+    if not user.wedding or item.wedding_id != user.wedding.id:
+        return {"error": "Forbidden."}, 403
+
+    db.session.delete(item)
+    db.session.commit()
+
+    return {}, 204
+
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
 

@@ -253,6 +253,106 @@ def delete_budget_item(id):
 
     return {}, 204
 
+    @app.get("/api/vendors")
+def get_vendors():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if not user.wedding:
+        return [], 200
+
+    return [vendor.to_dict() for vendor in user.wedding.vendors], 200
+
+
+@app.post("/api/vendors")
+def create_vendor():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if not user.wedding:
+        return {"error": "Create a wedding profile first."}, 400
+
+    data = request.get_json()
+
+    vendor = Vendor(
+        name=data.get("name"),
+        category=data.get("category"),
+        contact_name=data.get("contact_name"),
+        contact_email=data.get("contact_email"),
+        phone=data.get("phone"),
+        quoted_price=data.get("quoted_price", 0),
+        status=data.get("status", "Researching"),
+        rating=data.get("rating"),
+        notes=data.get("notes"),
+        wedding_id=user.wedding.id
+    )
+
+    db.session.add(vendor)
+    db.session.commit()
+
+    return vendor.to_dict(), 201
+
+
+@app.patch("/api/vendors/<int:id>")
+def update_vendor(id):
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    vendor = Vendor.query.get(id)
+
+    if not vendor:
+        return {"error": "Vendor not found."}, 404
+
+    if not user.wedding or vendor.wedding_id != user.wedding.id:
+        return {"error": "Forbidden."}, 403
+
+    data = request.get_json()
+
+    for field in [
+        "name",
+        "category",
+        "contact_name",
+        "contact_email",
+        "phone",
+        "quoted_price",
+        "status",
+        "rating",
+        "notes"
+    ]:
+        if field in data:
+            setattr(vendor, field, data[field])
+
+    db.session.commit()
+
+    return vendor.to_dict(), 200
+
+
+@app.delete("/api/vendors/<int:id>")
+def delete_vendor(id):
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    vendor = Vendor.query.get(id)
+
+    if not vendor:
+        return {"error": "Vendor not found."}, 404
+
+    if not user.wedding or vendor.wedding_id != user.wedding.id:
+        return {"error": "Forbidden."}, 403
+
+    db.session.delete(vendor)
+    db.session.commit()
+
+    return {}, 204
+
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
 

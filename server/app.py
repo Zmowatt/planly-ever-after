@@ -20,7 +20,7 @@ bcrypt.init_app(app)
 
 @app.get("/")
 def index():
-    return{"message": "Planly Ever After API"}
+    return {"message": "Planly Ever After API"}
 
 def get_current_user():
     return User.query.get(session.get("user_id"))
@@ -83,6 +83,81 @@ def check_session():
         return user.to_dict(), 200
 
     return {"error": "Unauthorized."}, 401
+
+@app.get("/api/wedding")
+def get_wedding():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if not user.wedding:
+        return {"message": "No wedding profile found."}, 404
+
+    return user.wedding.to_dict(), 200
+
+
+@app.post("/api/wedding")
+def create_wedding():
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    if user.wedding:
+        return {"error": "Wedding profile already exists."}, 400
+
+    data = request.get_json()
+
+    wedding = Wedding(
+        partner_one_name=data.get("partner_one_name"),
+        partner_two_name=data.get("partner_two_name"),
+        wedding_date=data.get("wedding_date"),
+        venue=data.get("venue"),
+        estimated_guest_count=data.get("estimated_guest_count"),
+        total_budget=data.get("total_budget"),
+        theme=data.get("theme"),
+        user_id=user.id
+    )
+
+    db.session.add(wedding)
+    db.session.commit()
+
+    return wedding.to_dict(), 201
+
+
+@app.patch("/api/wedding/<int:id>")
+def update_wedding(id):
+    user = get_current_user()
+
+    if not user:
+        return {"error": "Unauthorized."}, 401
+
+    wedding = Wedding.query.get(id)
+
+    if not wedding:
+        return {"error": "Wedding not found."}, 404
+
+    if wedding.user_id != user.id:
+        return {"error": "Forbidden."}, 403
+
+    data = request.get_json()
+
+    for field in [
+        "partner_one_name",
+        "partner_two_name",
+        "wedding_date",
+        "venue",
+        "estimated_guest_count",
+        "total_budget",
+        "theme"
+    ]:
+        if field in data:
+            setattr(wedding, field, data[field])
+
+    db.session.commit()
+
+    return wedding.to_dict(), 200
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

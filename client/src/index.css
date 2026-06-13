@@ -3,25 +3,41 @@
 }
 
 :root {
-  --ivory: #fbf7f0;
-  --cream: #fffdf8;
-  --champagne: #d8b88f;
-  --rose: #b8878f;
-  --plum: #4b2e45;
-  --sage: #8c9b7a;
-  --charcoal: #2d2a2a;
-  --muted: #746b66;
-  --border: #eadfce;
-  --shadow: 0 12px 30px rgba(75, 46, 69, 0.12);
+  --parchment: #f7eedf;
+  --cream: #fffaf1;
+  --soft-cream: #fbf4e8;
+  --champagne: #d7b377;
+  --antique-gold: #b88a44;
+  --rose: #b98b8f;
+  --plum: #4a2f42;
+  --ink: #312822;
+  --muted: #7b6f66;
+  --border: #e3d1b8;
+  --shadow: 0 14px 34px rgba(74, 47, 66, 0.14);
 }
 
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  min-height: 100vh;
+  font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(216, 184, 143, 0.25), transparent 30%),
-    linear-gradient(135deg, var(--ivory), #f5eee5);
-  color: var(--charcoal);
+    radial-gradient(circle at 15% 10%, rgba(215, 179, 119, 0.24), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(185, 139, 143, 0.18), transparent 28%),
+    linear-gradient(135deg, var(--parchment), #efe1ca);
+}
+
+/* subtle parchment texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: 0.22;
 }
 
 a {
@@ -31,51 +47,59 @@ a {
 }
 
 a:hover {
-  color: var(--rose);
+  color: var(--antique-gold);
 }
 
 nav {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1.1rem 2rem;
-  background: rgba(255, 253, 248, 0.92);
+  padding: 1.15rem 2rem;
+  background: rgba(255, 250, 241, 0.93);
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 4px 18px rgba(75, 46, 69, 0.08);
+  box-shadow: 0 6px 22px rgba(74, 47, 66, 0.1);
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(10px);
 }
 
-nav a:first-child {
-  margin-right: auto;
-  font-size: 1.45rem;
-  color: var(--plum);
-  letter-spacing: 0.04em;
+nav a {
+  font-family: "Palatino Linotype", Palatino, Georgia, serif;
 }
 
-nav button {
-  margin-left: 0.25rem;
+nav a:first-child {
+  margin-right: auto;
+  font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
+  font-size: 2rem;
+  color: var(--plum);
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 main {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 2.5rem auto;
   padding: 0 1.25rem 4rem;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
+  font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
   color: var(--plum);
-  font-size: 2.6rem;
-  margin-bottom: 0.35rem;
-  letter-spacing: 0.02em;
+  font-size: 3.6rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0 0 0.75rem;
 }
 
 h2 {
   color: var(--plum);
-  margin-top: 0;
   font-size: 1.55rem;
+  margin-top: 0;
+  border-bottom: 1px solid rgba(184, 138, 68, 0.28);
+  padding-bottom: 0.45rem;
 }
 
 h3 {
@@ -84,19 +108,35 @@ h3 {
 }
 
 p {
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--muted);
 }
 
 section,
 article,
 form {
-  background: rgba(255, 253, 248, 0.94);
+  background: rgba(255, 250, 241, 0.95);
   border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 1.5rem;
+  border-radius: 24px;
+  padding: 1.75rem;
   margin: 1.25rem 0;
   box-shadow: var(--shadow);
+}
+
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+section::before,
+article::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--champagne), var(--rose), var(--plum));
+  border-radius: 999px;
+  margin-bottom: 1rem;
 }
 
 form {
@@ -115,23 +155,23 @@ input,
 select {
   width: 100%;
   padding: 0.85rem;
-  border: 1px solid #d8cbb9;
-  border-radius: 12px;
-  background: #fffaf3;
-  color: var(--charcoal);
+  border: 1px solid #d6bea0;
+  border-radius: 13px;
+  background: #fffdf8;
+  color: var(--ink);
   font-size: 1rem;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 input:focus,
 select:focus {
-  outline: 3px solid rgba(216, 184, 143, 0.35);
-  border-color: var(--champagne);
+  outline: 3px solid rgba(215, 179, 119, 0.35);
+  border-color: var(--antique-gold);
 }
 
 button {
   width: fit-content;
-  padding: 0.8rem 1.15rem;
+  padding: 0.82rem 1.2rem;
   border: none;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--plum), #72536c);
@@ -139,12 +179,16 @@ button {
   font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(75, 46, 69, 0.18);
+  box-shadow: 0 8px 18px rgba(74, 47, 66, 0.18);
 }
 
 button:hover {
   transform: translateY(-1px);
-  background: linear-gradient(135deg, #3a2335, var(--plum));
+  background: linear-gradient(135deg, #382333, var(--plum));
+}
+
+article {
+  border-left: 5px solid var(--champagne);
 }
 
 article button,
@@ -156,37 +200,45 @@ article select {
 .error {
   color: #9d1c1c;
   font-weight: 800;
+  background: #fff1f1;
+  border: 1px solid #e8b5b5;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
 }
 
 .success {
   color: #2f7a4f;
   font-weight: 800;
+  background: #effaf2;
+  border: 1px solid #b9dec5;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
 }
 
-main > section:first-of-type {
-  border-top: 5px solid var(--champagne);
+/* Landing page feel */
+main > h1:first-child {
+  text-align: left;
 }
 
+main > h1 + h2,
 main > h1 + p {
-  font-size: 1.1rem;
+  max-width: 720px;
 }
 
-form button {
-  margin-top: 0.5rem;
-}
-
-article {
-  border-left: 5px solid var(--champagne);
+/* Slightly nicer card spacing */
+section p,
+article p {
+  margin: 0.4rem 0;
 }
 
 @media (min-width: 800px) {
   form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
   }
 
-  form button,
-  form label:last-of-type {
-    grid-column: span 2;
+  form button {
+    grid-column: 1 / -1;
   }
 }
 
@@ -198,10 +250,11 @@ article {
 
   nav a:first-child {
     width: 100%;
+    font-size: 1.8rem;
   }
 
   h1 {
-    font-size: 2.1rem;
+    font-size: 2.8rem;
   }
 
   main {
